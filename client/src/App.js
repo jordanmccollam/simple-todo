@@ -3,16 +3,17 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Heading, Task } from './components';
 // import './app.scss';
 
-const test_tasks = [
+const testTasks = [
   {
     task: "Do a task"
   },
   {
     task: "Do dishes"
   },
-  // {
-  //   task: "Make bed"
-  // },
+  {
+    task: "Make bed"
+  },
+  
   // {
   //   task: "Make bed"
   // },
@@ -31,7 +32,12 @@ const test_tasks = [
 ]
 
 function App() {
-  const [tasks, setTasks] = useState(test_tasks)
+  const [tasks, setTasks] = useState(testTasks)
+
+  const onAddTask = (event) => {
+    const newTask = {task: "NEW TASK"}
+    setTasks(oldTasks => [...oldTasks, newTask]);
+  }
 
   return (
     <div className='App'>
@@ -43,14 +49,20 @@ function App() {
           </Col>
         </Row>
 
+        {/* Need an extra container here wrapped around the button and task list to position btn */}
         <Row className='app-main-content d-flex justify-content-center'>
-          <Col xs={11} lg={10} xl={6} className='task-list'>
+          <Col xs={11} lg={10} xl={6} className='task-container'>
+
             {/* Tasks go here */}
-            {tasks.map((task, task_index) => (
-              <Task key={`task-${task_index}`} task={task.task} />
-            ))}
+            <Row className='task-list'>
+              <Col>
+                {tasks.map((task, taskIndex) => (
+                  <Task key={`task-${taskIndex}`} task={task.task} />
+                ))}
+              </Col>
+            </Row>
             
-            <Button variant='danger' className='rounded-circle add-task-btn shadow' >+</Button>
+            <Button variant='danger' className='rounded-circle add-task-btn shadow' onClick={onAddTask} >+</Button>
           </Col>
         </Row>
 
