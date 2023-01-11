@@ -43,14 +43,16 @@
     overflow-y: auto;
     overflow-x: visible;
 
+    scrollbar-width: thin;
+
     // Hide scroll bar for:
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    // -ms-overflow-style: none;  /* IE and Edge */
+    // scrollbar-width: none;  /* Firefox */
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
-.task-list::-webkit-scrollbar {
-    display: none;
-}
+// .task-list::-webkit-scrollbar {
+//     display: none;
+// }
 
 .add-task-btn {
     width: 2em;
