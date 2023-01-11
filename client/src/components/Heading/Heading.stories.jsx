@@ -11,11 +11,17 @@ export const Default = {
     args: {
       children: 'Hello World!',
       filled: false,
-      subtext: 'this is subtext'
     },
 };
 
 export const Filled = {
+    args: {
+        children: 'Hello World!',
+        filled: true,
+    }
+}
+
+export const WithSubtext = {
     args: {
         children: 'Hello World!',
         filled: true,
