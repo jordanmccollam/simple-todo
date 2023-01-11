@@ -12,3 +12,9 @@ export const Default = {
         task: "Do a task"
     },
 };
+export const Empty = {
+    args: {
+        task: "Do a task",
+        isEmpty: true
+    },
+};

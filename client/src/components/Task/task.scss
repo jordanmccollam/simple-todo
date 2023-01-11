@@ -1,10 +1,14 @@
 @import "../../app.scss";
 
 .task {
-    padding: $space-01 0;
+    padding: $space-02 0;
     border-radius: $border-radius;
     background-color: $dark;
     color: $light;
 
     margin-bottom: $space-00; // to create a gap between items
+
+    &-empty {
+        background-color: grey;
+    }
 }

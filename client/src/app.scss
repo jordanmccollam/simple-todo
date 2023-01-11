@@ -8,4 +8,35 @@
     font-size: 24px;
     // font-family: 'Karla', sans-serif;
     font-family: 'Montserrat', sans-serif;
+    position: relative;
+
+    .app-container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+
+        .app-header {
+            // background-color: lightblue; // for testing
+        }
+
+        .app-main-content {
+            // background-color: pink; // for testing
+            flex: 1;
+        }
+    }
+}
+
+.task-list {
+    height: 100%;
+    position: relative;
+}
+
+.add-task-btn {
+    width: 2em;
+    height: 2em;
+    font-size: $font-04;
+
+    position: absolute;
+    bottom: $space-01;
+    right: 0;
 }
