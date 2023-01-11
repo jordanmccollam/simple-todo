@@ -9,7 +9,7 @@ function App() {
       <Container>
         <Row>
           <Col>
-            <Heading filled >Test</Heading>
+            <Heading subtext={`9 pending tasks left`} >MY DAY</Heading>
           </Col>
         </Row>
       </Container>

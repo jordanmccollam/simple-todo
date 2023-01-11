@@ -1,6 +1,9 @@
 @import "../../app.scss";
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@200;300;400;700&family=Montserrat:wght@100;300;400;700&display=swap');
 
 .heading {
+    font-family: 'Montserrat', sans-serif;
+    font-size: $font-04;
     text-align: center;
     padding: $space-01 0;
     border-radius: $border-radius;
@@ -8,5 +11,9 @@
     &-filled {
         background-color: $dark;
         color: $light;
+    }
+
+    &-subtext {
+        font-size: $font-02;
     }
 }
