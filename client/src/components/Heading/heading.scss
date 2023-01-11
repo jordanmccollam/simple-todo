@@ -1,0 +1,12 @@
+@import "../../app.scss";
+
+.heading {
+    text-align: center;
+    padding: $space-01 0;
+    border-radius: $border-radius;
+
+    &-filled {
+        background-color: $dark;
+        color: $light;
+    }
+}
