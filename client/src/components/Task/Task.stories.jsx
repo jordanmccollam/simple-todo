@@ -30,12 +30,3 @@ export const Completed = {
         completed: true
     },
 };
-
-export const Empty = {
-    args: {
-        task: "Do a task",
-        isEmpty: true,
-        onCheckTask: onCheck,
-        onExpandMenu: onExpandMenu,
-    },
-};

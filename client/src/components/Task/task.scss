@@ -8,10 +8,6 @@
 
     margin-bottom: $space-00; // to create a gap between items
 
-    &-empty {
-        background-color: grey;
-    }
-
     &-completed {
         background-color: $success;
         &:hover {

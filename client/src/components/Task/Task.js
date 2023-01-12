@@ -17,24 +17,20 @@ const Task = (props) => {
 
     return (
         <Row 
-            className={`task ${props.isEmpty ? 'task-empty' : ''} ${props.completed ? 'task-completed' : ''}`} 
+            className={`task ${props.completed ? 'task-completed' : ''}`} 
             onClick={() => props.onCheckTask(props.task)} 
             onContextMenu={(e) => {
                 expandOptions(e);
             }
         }>
-            {!props.isEmpty && (
-            <>
-                <Col xs={1} className='text-center'>
-                    {/* Checkbox here */}
-                    <Checkbox checked={props.completed} />
-                </Col>
-                <Col>
-                    {/* task here here */}
-                    {props.task}
-                </Col>
-            </>
-            )}
+            <Col xs={1} className='text-center'>
+                {/* Checkbox here */}
+                <Checkbox checked={props.completed} />
+            </Col>
+            <Col>
+                {/* task here here */}
+                {props.task}
+            </Col>
         </Row>
     )
 }
