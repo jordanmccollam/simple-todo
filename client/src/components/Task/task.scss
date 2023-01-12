@@ -5,8 +5,9 @@
     border-radius: $border-radius;
     background-color: $dark;
     color: $light;
-
     margin-bottom: $space-00; // to create a gap between items
+    display: flex;
+    align-items: center;
 
     &-completed {
         background-color: $success;
@@ -25,6 +26,16 @@
         .checkbox-icon {
             transition: $transition-time;
             transform: scale(1.2);
+        }
+    }
+    
+    .checkbox-icon {
+        color: $light;
+        font-size: 30px;
+        margin: 0 $space-02;
+
+        &-checked {
+            color: $success;
         }
     }
 }
