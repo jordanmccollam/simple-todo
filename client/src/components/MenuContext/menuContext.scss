@@ -1,0 +1,16 @@
+@import "../../app.scss";
+
+.menuContext {
+    width: 10em;
+    background-color: $dark;
+    border-radius: $border-radius;
+    color: $light;
+    padding: $space-01 $space-02;
+    font-size: $font-03;
+
+    position: absolute;
+
+    .menu-context-item:not(:last-child) {
+        border-bottom: 1px solid rgba($light, .15);
+    }
+}
