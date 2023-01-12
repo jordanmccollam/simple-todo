@@ -1,0 +1,15 @@
+@import "../../app.scss";
+
+.checkbox {
+    text-align: center;
+
+    &-icon {
+        color: $light;
+        font-size: 30px;
+        margin-left: $space-00;
+
+        &-checked {
+            color: $success;
+        }
+    }
+}

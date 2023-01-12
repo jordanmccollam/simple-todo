@@ -11,4 +11,24 @@
     &-empty {
         background-color: grey;
     }
+
+    &-completed {
+        background-color: $success;
+        &:hover {
+            background-color: darken($success, 10%) !important;
+            cursor: pointer;
+            transition: $transition-time;
+        }
+    }
+
+    &:hover {
+        background-color: $warning;
+        cursor: pointer;
+        transition: $transition-time;
+
+        .checkbox-icon {
+            transition: $transition-time;
+            transform: scale(1.2);
+        }
+    }
 }
