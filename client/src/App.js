@@ -6,13 +6,13 @@ import { BsCheck2All } from 'react-icons/bs';
 
 const testTasks = [
   {
-    task: "Do a task"
+    description: "Do a task"
   },
   {
-    task: "Do dishes"
+    description: "Do dishes"
   },
   {
-    task: "Make bed"
+    description: "Make bed"
   },
 
   // {
@@ -43,18 +43,18 @@ function App() {
   })
 
   const onAddTask = (event) => {
-    var newTask = {task: "NEW TASK"}
+    var newTask = {description: "NEW TASK"}
     setTasks(oldTasks => [...oldTasks, newTask]);
   }
 
   const onCheckTask = (taskToCheck) => {
-    setCompletedTasks(oldTasks => [tasks.find(t => t.task == taskToCheck), ...oldTasks])
-    setTasks(oldTasks => oldTasks.filter(task => task.task != taskToCheck))
+    setCompletedTasks(oldTasks => [tasks.find(task => task == taskToCheck), ...oldTasks])
+    setTasks(oldTasks => oldTasks.filter(task => task != taskToCheck))
   }
 
   const onUncheckTask = (taskToUncheck) => {
-    setTasks(oldTasks => [...oldTasks, completedTasks.find(t => t.task == taskToUncheck)])
-    setCompletedTasks(oldTasks => oldTasks.filter(task => task.task != taskToUncheck))
+    setTasks(oldTasks => [...oldTasks, completedTasks.find(task => task == taskToUncheck)])
+    setCompletedTasks(oldTasks => oldTasks.filter(task => task != taskToUncheck))
   }
 
   const taskMenuItems = [
@@ -90,10 +90,10 @@ function App() {
             <Row className='task-list'>
               <Col>
                 {tasks.map((task, taskIndex) => (
-                  <Task onCheckTask={onCheckTask} onExpandMenu={setTaskMenuData} key={`task-${taskIndex}`} task={task.task} taskIndex={taskIndex} />
+                  <Task onCheckTask={onCheckTask} onExpandMenu={setTaskMenuData} key={`task-${taskIndex}`} task={task} taskIndex={taskIndex} />
                 ))}
                 {completedTasks.map((task, taskIndex) => (
-                  <Task completed onCheckTask={onUncheckTask} onExpandMenu={setTaskMenuData} key={`completed-task-${taskIndex}`} task={task.task} taskIndex={taskIndex} />
+                  <Task completed onCheckTask={onUncheckTask} onExpandMenu={setTaskMenuData} key={`completed-task-${taskIndex}`} task={task} taskIndex={taskIndex} />
                 ))}
               </Col>
             </Row>
@@ -104,6 +104,7 @@ function App() {
 
       </Container>
 
+      {/* (Right click menu) */}
       <MenuContext menuItems={taskMenuItems} data={taskMenuData} />
     </div>
   );

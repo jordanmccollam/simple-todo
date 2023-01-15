@@ -31,7 +31,7 @@ const Task = (props) => {
             )}
             <div>
                 {/* task here here */}
-                {props.task}
+                {props.task.description}
             </div>
         </div>
     )
