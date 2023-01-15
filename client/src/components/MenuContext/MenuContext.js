@@ -9,7 +9,7 @@ const MenuContext = ({ menuItems, data }) => {
             {menuItems.map((item, itemIndex) => (
                 <Row key={`menu-context-item-${itemIndex}`} className='menu-context-item'>
                     <Col>
-                        {item.name} {` `} {item.icon}
+                        <div className='menu-context-item-border' onClick={() => item.func()} >{item.name} {` `} {item.icon}</div>
                     </Col>
                 </Row>
             ))}

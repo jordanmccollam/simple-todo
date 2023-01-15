@@ -44,17 +44,36 @@ function App() {
 
   const onAddTask = (event) => {
     var newTask = {description: "NEW TASK"}
-    setTasks(oldTasks => [...oldTasks, newTask]);
+    setTasks(prevTasks => [...prevTasks, newTask]);
   }
 
   const onCheckTask = (taskToCheck) => {
-    setCompletedTasks(oldTasks => [tasks.find(task => task == taskToCheck), ...oldTasks])
-    setTasks(oldTasks => oldTasks.filter(task => task != taskToCheck))
+    setCompletedTasks(prevTasks => [tasks.find(task => task == taskToCheck), ...prevTasks])
+    setTasks(prevTasks => prevTasks.filter(task => task != taskToCheck))
   }
 
   const onUncheckTask = (taskToUncheck) => {
-    setTasks(oldTasks => [...oldTasks, completedTasks.find(task => task == taskToUncheck)])
-    setCompletedTasks(oldTasks => oldTasks.filter(task => task != taskToUncheck))
+    setTasks(prevTasks => [...prevTasks, completedTasks.find(task => task == taskToUncheck)])
+    setCompletedTasks(prevTasks => prevTasks.filter(task => task != taskToUncheck))
+  }
+
+  const onRemoveTask = () => {
+    toggleContextMenu()
+
+    if (tasks.includes(taskMenuData.task)) {
+      setTasks(prevTasks => prevTasks.filter(task => task != taskMenuData.task))
+    }
+    else if (completedTasks.includes(taskMenuData.task)) {
+      setCompletedTasks(prevTasks => prevTasks.filter(task => task != taskMenuData.task))
+    }
+  }
+
+  const toggleContextMenu = () => {
+    setTaskMenuData({...taskMenuData, show: !taskMenuData.show})
+  }
+
+  const onEditTask = () => {
+
   }
 
   const taskMenuItems = [
@@ -66,9 +85,9 @@ function App() {
     {
         name: "Remove",
         icon: <BsCheck2All className='mt-1' />,
-        func: () =>  console.log("remove task")
+        func: () =>  onRemoveTask()
     }
-]
+  ]
 
   return (
     <div className='App' onContextMenu={(e) => {

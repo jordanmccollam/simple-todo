@@ -13,4 +13,20 @@
     .menu-context-item:not(:last-child) {
         border-bottom: 1px solid rgba($light, .15);
     }
+
+    .menu-context-item {
+        &:hover {
+            cursor: pointer;
+            transition: $transition-time;
+
+            .menu-context-item-border {
+                background-color: darken($dark, 10%);
+            }
+        }
+
+        &-border {
+            border-radius: $border-radius;
+            padding: 0 $space-01;
+        }
+    }
 }
