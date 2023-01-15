@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Heading, Task, MenuContext } from './components';
 import { BsCheck2All } from 'react-icons/bs';
+import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
+import { TiCancel } from 'react-icons/ti';
 // import './app.scss';
 
 const testTasks = [
@@ -43,22 +45,25 @@ function App() {
   })
 
   const onAddTask = (event) => {
+    closeContextMenu()
     var newTask = {description: "NEW TASK"}
     setTasks(prevTasks => [...prevTasks, newTask]);
   }
 
   const onCheckTask = (taskToCheck) => {
+    closeContextMenu()
     setCompletedTasks(prevTasks => [tasks.find(task => task == taskToCheck), ...prevTasks])
     setTasks(prevTasks => prevTasks.filter(task => task != taskToCheck))
   }
 
   const onUncheckTask = (taskToUncheck) => {
+    closeContextMenu()
     setTasks(prevTasks => [...prevTasks, completedTasks.find(task => task == taskToUncheck)])
     setCompletedTasks(prevTasks => prevTasks.filter(task => task != taskToUncheck))
   }
 
   const onRemoveTask = () => {
-    toggleContextMenu()
+    closeContextMenu()
 
     if (tasks.includes(taskMenuData.task)) {
       setTasks(prevTasks => prevTasks.filter(task => task != taskMenuData.task))
@@ -68,8 +73,10 @@ function App() {
     }
   }
 
-  const toggleContextMenu = () => {
-    setTaskMenuData({...taskMenuData, show: !taskMenuData.show})
+  const closeContextMenu = () => {
+    if (taskMenuData.show) {
+      setTaskMenuData({...taskMenuData, show: false})
+    }
   }
 
   const onEditTask = () => {
@@ -79,14 +86,19 @@ function App() {
   const taskMenuItems = [
     {
         name: "Rename",
-        icon: <BsCheck2All className='mt-1' />,
+        icon: <AiFillEdit className='' />,
         func: () =>  console.log("rename task")
     },
     {
         name: "Remove",
-        icon: <BsCheck2All className='mt-1' />,
+        icon: <AiFillDelete className='' />,
         func: () =>  onRemoveTask()
-    }
+    },
+    {
+        name: "Cancel",
+        icon: <TiCancel className='' />,
+        func: () =>  closeContextMenu()
+    },
   ]
 
   return (
