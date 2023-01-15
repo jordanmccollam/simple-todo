@@ -109,7 +109,7 @@ function App() {
       <Container className='app-container'>
         <Row className='app-header'>
           <Col>
-            <Heading subtext={`9 pending tasks left`} >MY DAY</Heading>
+            <Heading subtext={`${tasks.length} pending tasks left`} >MY DAY</Heading>
           </Col>
         </Row>
 
