@@ -4,6 +4,7 @@ import { Heading, Task, MenuContext } from './components';
 import { BsCheck2All } from 'react-icons/bs';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import { TiCancel } from 'react-icons/ti';
+import moment from 'moment';
 // import './app.scss';
 
 const testTasks = [
@@ -109,7 +110,7 @@ function App() {
       <Container className='app-container'>
         <Row className='app-header'>
           <Col>
-            <Heading subtext={`${tasks.length} pending tasks left`} >MY DAY</Heading>
+            <Heading subtext={`${tasks.length} pending tasks left`} >{moment().format('dddd')}</Heading>
           </Col>
         </Row>
 
