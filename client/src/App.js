@@ -9,14 +9,17 @@ import moment from 'moment';
 
 const testTasks = [
   {
+    id: 1,
     description: "Do a task",
     completed: false
   },
   {
+    id: 2,
     description: "Do dishes",
     completed: true
   },
   {
+    id: 3,
     description: "Make bed",
     completed: false
   },
@@ -33,7 +36,7 @@ function App() {
 
   const onAddTask = (event) => {
     closeContextMenu()
-    var newTask = {description: "NEW TASK", completed: false}
+    var newTask = {id: Math.floor(Math.random() * 10000), description: "NEW TASK", completed: false}
     setTasks(prevTasks => [...prevTasks, newTask]);
   }
 
@@ -105,10 +108,10 @@ function App() {
             <Row className='task-list'>
               <Col>
                 {tasks.filter(t => !t.completed).map((task, taskIndex) => (
-                  <Task onCheckTask={onCheckTask} onExpandMenu={setTaskMenuData} key={`task-${task.description}-${taskIndex}`} task={task} taskIndex={taskIndex} />
+                  <Task onCheckTask={onCheckTask} onExpandMenu={setTaskMenuData} key={`task-${task.id}`} task={task} taskIndex={taskIndex} />
                 ))}
                 {tasks.filter(t => t.completed).map((task, taskIndex) => (
-                  <Task onCheckTask={onUncheckTask} onExpandMenu={setTaskMenuData} key={`completed-task-${task.description}-${taskIndex}`} task={task} taskIndex={taskIndex} />
+                  <Task onCheckTask={onUncheckTask} onExpandMenu={setTaskMenuData} key={`completed-task-${task.id}`} task={task} taskIndex={taskIndex} />
                 ))}
               </Col>
             </Row>

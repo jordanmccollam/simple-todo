@@ -6,7 +6,7 @@ import { AiFillCheckCircle, AiFillEdit } from 'react-icons/ai'
 
 const Task = (props) => {
     const [ description, setDescription ] = useState(props.task.description)
-    const [ editing, setEditing ] = useState(true)
+    const [ editing, setEditing ] = useState(false)
 
     const expandOptions = (e) => {
         e.preventDefault(); // disables default context menu
@@ -55,6 +55,7 @@ const Task = (props) => {
         }>
             {/* Checkbox here */}
             {renderIcon()}
+
             <div>
                 {/* task here here */}
                 {!editing ? (
