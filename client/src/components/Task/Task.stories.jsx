@@ -11,7 +11,7 @@ export default {
     title: 'Task',
     component: Task,
     args: {
-        task: "Do a task",
+        task: { description: 'Do a task' },
         onCheckTask: onCheck,
         onExpandMenu: onExpandMenu,
     }
@@ -28,5 +28,11 @@ export const Default = {
 export const Completed = {
     args: {
         completed: true
+    },
+};
+
+export const InEditing = {
+    args: {
+        completed: false
     },
 };

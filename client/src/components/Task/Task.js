@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
 import './task.scss';
 import { BsCheck2All } from 'react-icons/bs';
 import { AiFillCheckCircle } from 'react-icons/ai'
 
 const Task = (props) => {
+    const [ editing, setEditing ] = useState(true);
 
     const expandOptions = (e) => {
         e.preventDefault(); // disables default context menu
@@ -31,7 +34,22 @@ const Task = (props) => {
             )}
             <div>
                 {/* task here here */}
-                {props.task.description}
+                {!editing ? (
+                    props.task.description
+                ) : (
+                    <>
+                        <Form.Label htmlFor="inputPassword5">Password</Form.Label>
+                        <Form.Control
+                            type="password"
+                            id="inputPassword5"
+                            aria-describedby="passwordHelpBlock"
+                        />
+                        <Form.Text id="passwordHelpBlock" muted>
+                            Your password must be 8-20 characters long, contain letters and numbers,
+                            and must not contain spaces, special characters, or emoji.
+                        </Form.Text>
+                    </>
+                )}
             </div>
         </div>
     )
