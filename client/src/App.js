@@ -80,18 +80,19 @@ function App() {
     }
   }
 
-  const onEditTask = () => {
-    
+  const onRenameTask = () => {
+    closeContextMenu()
+    console.log('Renaming Task')
   }
 
   const taskMenuItems = [
     {
-        name: "Rename",
+        name: 'Rename',
         icon: <AiFillEdit className='' />,
-        func: () =>  console.log("rename task")
+        func: () => onRenameTask()
     },
     {
-        name: "Remove",
+        name: 'Remove',
         icon: <AiFillDelete className='' />,
         func: () =>  onRemoveTask()
     },
