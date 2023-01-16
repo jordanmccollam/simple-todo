@@ -38,4 +38,13 @@
             color: $success;
         }
     }
+
+    input,
+    input:focus {
+        border: none;
+        background-color: transparent;
+        border-bottom: 1px solid $light;
+        color: $light;
+        outline: none;
+    }
 }
