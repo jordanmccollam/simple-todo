@@ -23,14 +23,14 @@ const Task = (props) => {
 
     return (
         <div 
-            className={`task ${props.completed ? 'task-completed' : ''}`} 
+            className={`task ${props.task.completed ? 'task-completed' : ''}`} 
             onClick={() => props.editing ? console.log('editing') : props.onCheckTask(props.task)} 
             onContextMenu={(e) => {
                 expandOptions(e);
             }
         }>
             {/* Checkbox here */}
-            {props.completed ? (
+            {props.task.completed ? (
                 <BsCheck2All className={`checkbox-icon`} />
             ) : (
                 <AiFillCheckCircle className={`checkbox-icon`} />

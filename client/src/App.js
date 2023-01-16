@@ -9,30 +9,17 @@ import moment from 'moment';
 
 const testTasks = [
   {
-    description: "Do a task"
+    description: "Do a task",
+    completed: false
   },
   {
-    description: "Do dishes"
+    description: "Do dishes",
+    completed: true
   },
   {
-    description: "Make bed"
+    description: "Make bed",
+    completed: false
   },
-
-  // {
-  //   task: "Make bed"
-  // },
-  // {
-  //   task: "Make bed"
-  // },
-  // {
-  //   task: "Make bed"
-  // },
-  // {
-  //   task: "Make bed"
-  // },
-  // {
-  //   task: "Make bed"
-  // },
 ]
 
 function App() {
@@ -47,31 +34,27 @@ function App() {
 
   const onAddTask = (event) => {
     closeContextMenu()
-    var newTask = {description: "NEW TASK"}
+    var newTask = {description: "NEW TASK", completed: false}
     setTasks(prevTasks => [...prevTasks, newTask]);
   }
 
   const onCheckTask = (taskToCheck) => {
     closeContextMenu()
-    setCompletedTasks(prevTasks => [tasks.find(task => task == taskToCheck), ...prevTasks])
-    setTasks(prevTasks => prevTasks.filter(task => task != taskToCheck))
+    var allTasks = [...tasks]
+    allTasks[tasks.indexOf(taskToCheck)].completed = true
+    setTasks(allTasks)
   }
 
   const onUncheckTask = (taskToUncheck) => {
     closeContextMenu()
-    setTasks(prevTasks => [...prevTasks, completedTasks.find(task => task == taskToUncheck)])
-    setCompletedTasks(prevTasks => prevTasks.filter(task => task != taskToUncheck))
+    var allTasks = [...tasks]
+    allTasks[tasks.indexOf(taskToUncheck)].completed = false
+    setTasks(allTasks)
   }
 
   const onRemoveTask = () => {
     closeContextMenu()
-
-    if (tasks.includes(taskMenuData.task)) {
-      setTasks(prevTasks => prevTasks.filter(task => task != taskMenuData.task))
-    }
-    else if (completedTasks.includes(taskMenuData.task)) {
-      setCompletedTasks(prevTasks => prevTasks.filter(task => task != taskMenuData.task))
-    }
+    setTasks(prevTasks => prevTasks.filter(task => task != taskMenuData.task))
   }
 
   const closeContextMenu = () => {
@@ -111,7 +94,7 @@ function App() {
       <Container className='app-container'>
         <Row className='app-header'>
           <Col>
-            <Heading subtext={`${tasks.length} pending tasks left`} >{moment().format('dddd')}</Heading>
+            <Heading subtext={`${tasks.filter(t => !t.completed).length} pending tasks left`} >{moment().format('dddd')}</Heading>
           </Col>
         </Row>
 
@@ -122,11 +105,11 @@ function App() {
             {/* Tasks go here */}
             <Row className='task-list'>
               <Col>
-                {tasks.map((task, taskIndex) => (
-                  <Task onCheckTask={onCheckTask} onExpandMenu={setTaskMenuData} key={`task-${taskIndex}`} task={task} taskIndex={taskIndex} />
+                {tasks.filter(t => !t.completed).map((task, taskIndex) => (
+                  <Task onCheckTask={onCheckTask} onExpandMenu={setTaskMenuData} key={`task-${task.description}-${taskIndex}`} task={task} taskIndex={taskIndex} />
                 ))}
-                {completedTasks.map((task, taskIndex) => (
-                  <Task completed onCheckTask={onUncheckTask} onExpandMenu={setTaskMenuData} key={`completed-task-${taskIndex}`} task={task} taskIndex={taskIndex} />
+                {tasks.filter(t => t.completed).map((task, taskIndex) => (
+                  <Task onCheckTask={onUncheckTask} onExpandMenu={setTaskMenuData} key={`completed-task-${task.description}-${taskIndex}`} task={task} taskIndex={taskIndex} />
                 ))}
               </Col>
             </Row>

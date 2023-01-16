@@ -7,13 +7,20 @@ const onExpandMenu = () => {
     console.log("expand test")
 }
 
+const defaultTask = {
+    description: "Do a task",
+    completed: false
+}
+
 export default {
     title: 'Task',
     component: Task,
     args: {
-        task: { description: 'Do a task' },
         onCheckTask: onCheck,
         onExpandMenu: onExpandMenu,
+        task: {
+            ...defaultTask
+        }
     }
 }
 
@@ -21,18 +28,18 @@ const Template = args => <Task {...args} />
 
 export const Default = {
     args: {
-        completed: false
+        
     },
 };
 
 export const Completed = {
     args: {
-        completed: true
+        task: {...defaultTask, completed: true}
     },
 };
 
 export const InEditing = {
     args: {
-        completed: false
+
     },
 };
