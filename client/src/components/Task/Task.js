@@ -4,17 +4,24 @@ import './task.scss';
 import { BsCheck2All } from 'react-icons/bs';
 import { AiFillCheckCircle, AiFillEdit } from 'react-icons/ai'
 
-const Task = (props) => {
-    const [ description, setDescription ] = useState(props.task.description)
-    const [ editing, setEditing ] = useState(false)
+const Task = ({
+    task, // -> description, id, completed
+    onCheckTask,
+    onExpandMenu,
+    editing,
+    onConfirmEdit
+}) => {
+    const [ description, setDescription ] = useState(task.description)
+    // const [ editing, setEditing ] = useState(false)
 
     const expandOptions = (e) => {
         e.preventDefault(); // disables default context menu
-        props.onExpandMenu(prevData => ({
+
+        onExpandMenu(prevData => ({
             x: e.pageX,
             y: e.pageY,
-            show: props.task == prevData.task ? !prevData.show : true,
-            task: props.task
+            show: task == prevData.task ? !prevData.show : true,
+            task: task
         }))
     }
 
@@ -23,12 +30,11 @@ const Task = (props) => {
     }
 
     const onBlur = () => {
-        console.log("Stop editing")
-        setEditing(false)
+        onConfirmEdit()
     }
 
     const handleEnterKeyPress = (e) => {
-        if (e.keyCode === 13) {
+        if (e.keyCode === 13 || e.keyCode === 27) { // enter or esc
             e.target.blur()
         }
     }
@@ -37,7 +43,7 @@ const Task = (props) => {
         if (editing) {
             return <AiFillEdit className={`checkbox-icon`} />
         } else {
-            if (props.task.completed) {
+            if (task.completed) {
                 return <BsCheck2All className={`checkbox-icon`} />
             } else {
                 return <AiFillCheckCircle className={`checkbox-icon`} />
@@ -47,17 +53,17 @@ const Task = (props) => {
 
     return (
         <div 
-            className={`task ${props.task.completed ? 'task-completed' : ''}`} 
-            onClick={() => !editing && props.onCheckTask(props.task)} 
+            className={`task ${task.completed ? 'task-completed' : ''}`} 
+            onClick={() => !editing && onCheckTask(task)} 
             onContextMenu={(e) => {
                 expandOptions(e);
             }
         }>
-            {/* Checkbox here */}
+
             {renderIcon()}
 
             <div>
-                {/* task here here */}
+                {/* task here */}
                 {!editing ? (
                     description
                 ) : (
@@ -69,6 +75,7 @@ const Task = (props) => {
                             onChange={onChange}
                             onBlur={onBlur}
                             onKeyDown={handleEnterKeyPress}
+                            autoFocus
                         />
                     </div>
                 )}

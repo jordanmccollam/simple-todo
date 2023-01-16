@@ -33,6 +33,7 @@ function App() {
     show: false,
     task: null
   })
+  const [editingTask, setEditingTask] = useState(null)
 
   const onAddTask = (event) => {
     closeContextMenu()
@@ -65,16 +66,20 @@ function App() {
     }
   }
 
-  const onRenameTask = () => {
+  const onEditTask = () => {
     closeContextMenu()
-    var allTasks = [...tasks]
+    setEditingTask(taskMenuData.task)
+  }
+
+  const onConfirmEdit = () => {
+    setEditingTask(null)
   }
 
   const taskMenuItems = [
     {
         name: 'Rename',
         icon: <AiFillEdit className='' />,
-        func: () => onRenameTask()
+        func: () => onEditTask()
     },
     {
         name: 'Remove',
@@ -108,10 +113,10 @@ function App() {
             <Row className='task-list'>
               <Col>
                 {tasks.filter(t => !t.completed).map((task, taskIndex) => (
-                  <Task onCheckTask={onCheckTask} onExpandMenu={setTaskMenuData} key={`task-${task.id}`} task={task} taskIndex={taskIndex} />
+                  <Task editing={editingTask == task} onConfirmEdit={onConfirmEdit} onCheckTask={onCheckTask} onExpandMenu={setTaskMenuData} key={`task-${task.id}`} task={task} taskIndex={taskIndex} />
                 ))}
                 {tasks.filter(t => t.completed).map((task, taskIndex) => (
-                  <Task onCheckTask={onUncheckTask} onExpandMenu={setTaskMenuData} key={`completed-task-${task.id}`} task={task} taskIndex={taskIndex} />
+                  <Task editing={editingTask == task} onConfirmEdit={onConfirmEdit} onCheckTask={onUncheckTask} onExpandMenu={setTaskMenuData} key={`completed-task-${task.id}`} task={task} taskIndex={taskIndex} />
                 ))}
               </Col>
             </Row>
