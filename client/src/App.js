@@ -24,7 +24,6 @@ const testTasks = [
 
 function App() {
   const [tasks, setTasks] = useState(testTasks)
-  const [completedTasks, setCompletedTasks] = useState([])
   const [taskMenuData, setTaskMenuData] = useState({
     x: 0,
     y: 0,
@@ -65,7 +64,7 @@ function App() {
 
   const onRenameTask = () => {
     closeContextMenu()
-    console.log('Renaming Task')
+    var allTasks = [...tasks]
   }
 
   const taskMenuItems = [

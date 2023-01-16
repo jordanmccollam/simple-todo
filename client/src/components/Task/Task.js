@@ -6,6 +6,7 @@ import { AiFillCheckCircle } from 'react-icons/ai'
 
 const Task = (props) => {
     const [ description, setDescription ] = useState(props.task.description)
+    const [ editing, setEditing ] = useState(true)
 
     const expandOptions = (e) => {
         e.preventDefault(); // disables default context menu
@@ -21,10 +22,21 @@ const Task = (props) => {
         setDescription(e.target.value)
     }
 
+    const onBlur = () => {
+        console.log("Stop editing")
+        setEditing(false)
+    }
+
+    const handleEnterKeyPress = (e) => {
+        if (e.keyCode === 13) {
+            e.target.blur()
+        }
+    }
+
     return (
         <div 
             className={`task ${props.task.completed ? 'task-completed' : ''}`} 
-            onClick={() => props.editing ? console.log('editing') : props.onCheckTask(props.task)} 
+            onClick={() => !editing && props.onCheckTask(props.task)} 
             onContextMenu={(e) => {
                 expandOptions(e);
             }
@@ -37,7 +49,7 @@ const Task = (props) => {
             )}
             <div>
                 {/* task here here */}
-                {!props.editing ? (
+                {!editing ? (
                     description
                 ) : (
                     <div>
@@ -46,6 +58,8 @@ const Task = (props) => {
                             placeholder='Task description here'
                             value={description}
                             onChange={onChange}
+                            onBlur={onBlur}
+                            onKeyDown={handleEnterKeyPress}
                         />
                     </div>
                 )}
