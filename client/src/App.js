@@ -37,8 +37,9 @@ function App() {
 
   const onAddTask = (event) => {
     closeContextMenu()
-    var newTask = {id: Math.floor(Math.random() * 10000), description: "NEW TASK", completed: false}
+    var newTask = {id: Math.floor(Math.random() * 10000), description: '', completed: false}
     setTasks(prevTasks => [...prevTasks, newTask]);
+    onEditTask(newTask)
   }
 
   const onCheckTask = (taskToCheck) => {
@@ -66,9 +67,9 @@ function App() {
     }
   }
 
-  const onEditTask = () => {
+  const onEditTask = (task) => {
     closeContextMenu()
-    setEditingTask(taskMenuData.task)
+    setEditingTask(task)
   }
 
   const onConfirmEdit = () => {
@@ -79,7 +80,7 @@ function App() {
     {
         name: 'Rename',
         icon: <AiFillEdit className='' />,
-        func: () => onEditTask()
+        func: () => onEditTask(taskMenuData.task)
     },
     {
         name: 'Remove',
