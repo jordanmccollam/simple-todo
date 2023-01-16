@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import './task.scss';
 import { BsCheck2All } from 'react-icons/bs';
-import { AiFillCheckCircle } from 'react-icons/ai'
+import { AiFillCheckCircle, AiFillEdit } from 'react-icons/ai'
 
 const Task = (props) => {
     const [ description, setDescription ] = useState(props.task.description)
@@ -33,6 +33,18 @@ const Task = (props) => {
         }
     }
 
+    const renderIcon = () => {
+        if (editing) {
+            return <AiFillEdit className={`checkbox-icon`} />
+        } else {
+            if (props.task.completed) {
+                return <BsCheck2All className={`checkbox-icon`} />
+            } else {
+                return <AiFillCheckCircle className={`checkbox-icon`} />
+            }
+        }
+    }
+
     return (
         <div 
             className={`task ${props.task.completed ? 'task-completed' : ''}`} 
@@ -42,11 +54,7 @@ const Task = (props) => {
             }
         }>
             {/* Checkbox here */}
-            {props.task.completed ? (
-                <BsCheck2All className={`checkbox-icon`} />
-            ) : (
-                <AiFillCheckCircle className={`checkbox-icon`} />
-            )}
+            {renderIcon()}
             <div>
                 {/* task here here */}
                 {!editing ? (
