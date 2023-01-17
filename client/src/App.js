@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Heading, Task, MenuContext } from './components';
-import { BsCheck2All } from 'react-icons/bs';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import { TiCancel } from 'react-icons/ti';
 import moment from 'moment';
@@ -114,10 +113,10 @@ function App() {
             <Row className='task-list'>
               <Col>
                 {tasks.filter(t => !t.completed).map((task, taskIndex) => (
-                  <Task editing={editingTask == task} onConfirmEdit={onConfirmEdit} onCheckTask={onCheckTask} onExpandMenu={setTaskMenuData} key={`task-${task.id}`} task={task} taskIndex={taskIndex} />
+                  <Task editing={editingTask === task} onConfirmEdit={onConfirmEdit} onCheckTask={onCheckTask} onExpandMenu={setTaskMenuData} key={`task-${task.id}`} task={task} taskIndex={taskIndex} />
                 ))}
                 {tasks.filter(t => t.completed).map((task, taskIndex) => (
-                  <Task editing={editingTask == task} onConfirmEdit={onConfirmEdit} onCheckTask={onUncheckTask} onExpandMenu={setTaskMenuData} key={`completed-task-${task.id}`} task={task} taskIndex={taskIndex} />
+                  <Task editing={editingTask === task} onConfirmEdit={onConfirmEdit} onCheckTask={onUncheckTask} onExpandMenu={setTaskMenuData} key={`completed-task-${task.id}`} task={task} taskIndex={taskIndex} />
                 ))}
               </Col>
             </Row>

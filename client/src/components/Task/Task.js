@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Row, Col } from 'react-bootstrap';
 import './task.scss';
 import { BsCheck2All } from 'react-icons/bs';
 import { AiFillCheckCircle, AiFillEdit } from 'react-icons/ai'
@@ -20,7 +19,7 @@ const Task = ({
         onExpandMenu(prevData => ({
             x: e.pageX,
             y: e.pageY,
-            show: task == prevData.task ? !prevData.show : true,
+            show: task === prevData.task ? !prevData.show : true,
             task: task
         }))
     }
