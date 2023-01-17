@@ -71,7 +71,10 @@ function App() {
     setEditingTask(task)
   }
 
-  const onConfirmEdit = () => {
+  const onConfirmEdit = (newDescription) => {
+    var allTasks = [...tasks]
+    allTasks[tasks.indexOf(editingTask)].description = newDescription
+    setTasks(allTasks)
     setEditingTask(null)
   }
 
@@ -113,10 +116,10 @@ function App() {
             <Row className='task-list'>
               <Col>
                 {tasks.filter(t => !t.completed).map((task, taskIndex) => (
-                  <Task editing={editingTask === task} onConfirmEdit={onConfirmEdit} onCheckTask={onCheckTask} onExpandMenu={setTaskMenuData} key={`task-${task.id}`} task={task} taskIndex={taskIndex} />
+                  <Task editing={editingTask === task} onConfirmEdit={onConfirmEdit} onCheckTask={onCheckTask} onExpandMenu={setTaskMenuData} key={`task-${task.description}`} task={task} taskIndex={taskIndex} />
                 ))}
                 {tasks.filter(t => t.completed).map((task, taskIndex) => (
-                  <Task editing={editingTask === task} onConfirmEdit={onConfirmEdit} onCheckTask={onUncheckTask} onExpandMenu={setTaskMenuData} key={`completed-task-${task.id}`} task={task} taskIndex={taskIndex} />
+                  <Task editing={editingTask === task} onConfirmEdit={onConfirmEdit} onCheckTask={onUncheckTask} onExpandMenu={setTaskMenuData} key={`completed-task-${task.description}`} task={task} taskIndex={taskIndex} />
                 ))}
               </Col>
             </Row>

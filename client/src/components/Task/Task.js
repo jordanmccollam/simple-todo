@@ -29,7 +29,7 @@ const Task = ({
     }
 
     const onBlur = () => {
-        onConfirmEdit()
+        onConfirmEdit(description)
     }
 
     const handleEnterKeyPress = (e) => {
