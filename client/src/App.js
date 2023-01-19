@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { Heading, Task, MenuContext } from './components';
+import { Heading, Task } from './components';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import { TiCancel } from 'react-icons/ti';
 import moment from 'moment';
@@ -35,46 +35,43 @@ function App() {
   const [editingTask, setEditingTask] = useState(null)
 
   const onAddTask = (event) => {
-    closeContextMenu()
     var newTask = {id: Math.floor(Math.random() * 10000), description: '', completed: false}
     setTasks(prevTasks => [...prevTasks, newTask]);
     onEditTask(newTask)
   }
 
   const onCheckTask = (taskToCheck) => {
-    closeContextMenu()
     var allTasks = [...tasks]
     allTasks[tasks.indexOf(taskToCheck)].completed = true
     setTasks(allTasks)
   }
 
   const onUncheckTask = (taskToUncheck) => {
-    closeContextMenu()
     var allTasks = [...tasks]
     allTasks[tasks.indexOf(taskToUncheck)].completed = false
     setTasks(allTasks)
   }
 
-  const onRemoveTask = () => {
-    closeContextMenu()
-    setTasks(prevTasks => prevTasks.filter(task => task != taskMenuData.task))
+  const onRemoveTask = (targetTask) => {
+    setTasks(prevTasks => prevTasks.filter(task => task != targetTask))
   }
 
-  const closeContextMenu = () => {
-    if (taskMenuData.show) {
-      setTaskMenuData({...taskMenuData, show: false})
+  const onEditTask = (targetTask) => {
+    if (editingTask === targetTask) {
+      setEditingTask(null)
+    } else {
+      setEditingTask(targetTask)
     }
   }
 
-  const onEditTask = (task) => {
-    closeContextMenu()
-    setEditingTask(task)
+  const onConfirmEdit = (updatedTask) => {
+    var allTasks = [...tasks]
+    allTasks[tasks.indexOf(editingTask)] = updatedTask
+    setTasks(allTasks)
+    setEditingTask(null)
   }
 
-  const onConfirmEdit = (newDescription) => {
-    var allTasks = [...tasks]
-    allTasks[tasks.indexOf(editingTask)].description = newDescription
-    setTasks(allTasks)
+  const onCancel = () => {
     setEditingTask(null)
   }
 
@@ -82,17 +79,17 @@ function App() {
     {
         name: 'Rename',
         icon: <AiFillEdit className='' />,
-        func: () => onEditTask(taskMenuData.task)
+        func: onEditTask
     },
     {
         name: 'Remove',
         icon: <AiFillDelete className='' />,
-        func: () =>  onRemoveTask()
+        func: onRemoveTask
     },
     {
         name: "Cancel",
         icon: <TiCancel className='' />,
-        func: () =>  closeContextMenu()
+        func: onCancel
     },
   ]
 
@@ -116,10 +113,10 @@ function App() {
             <Row className='task-list'>
               <Col>
                 {tasks.filter(t => !t.completed).map((task, taskIndex) => (
-                  <Task editing={editingTask === task} onConfirmEdit={onConfirmEdit} onCheckTask={onCheckTask} onExpandMenu={setTaskMenuData} key={`task-${task.id}`} task={task} taskIndex={taskIndex} />
+                  <Task editing={editingTask === task} onConfirmEdit={onConfirmEdit} onCheckTask={onCheckTask} key={`task-${task.id}`} task={task} taskIndex={taskIndex} taskMenuItems={taskMenuItems} />
                 ))}
                 {tasks.filter(t => t.completed).map((task, taskIndex) => (
-                  <Task editing={editingTask === task} onConfirmEdit={onConfirmEdit} onCheckTask={onUncheckTask} onExpandMenu={setTaskMenuData} key={`completed-task-${task.id}`} task={task} taskIndex={taskIndex} />
+                  <Task editing={editingTask === task} onConfirmEdit={onConfirmEdit} onCheckTask={onUncheckTask} key={`completed-task-${task.id}`} task={task} taskIndex={taskIndex} taskMenuItems={taskMenuItems} />
                 ))}
               </Col>
             </Row>
@@ -129,9 +126,6 @@ function App() {
         </Row>
 
       </Container>
-
-      {/* (Right click menu) */}
-      <MenuContext menuItems={taskMenuItems} data={taskMenuData} />
     </div>
   );
 }

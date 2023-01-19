@@ -1,42 +1,69 @@
 @import "../../app.scss";
 
 .task {
-    padding: $space-02 0;
-    border-radius: $border-radius;
-    background-color: $dark;
-    color: $light;
+    width: 100%;
+    font-family: $font-family;
     margin-bottom: $space-00; // to create a gap between items
-    display: flex;
-    align-items: center;
 
-    &-completed {
-        background-color: $success;
-        &:hover {
-            background-color: darken($success, 10%) !important;
+    &:hover {
+        .task-btn,
+        .task-dropdown-toggle {
+            background-color: $warning;
             cursor: pointer;
             transition: $transition-time;
         }
-    }
-
-    &:hover {
-        background-color: $warning;
-        cursor: pointer;
-        transition: $transition-time;
 
         .checkbox-icon {
-            transition: $transition-time;
             transform: scale(1.2);
+            transition: $transition-time;
         }
     }
-    
+
+    &-btn {
+        width: 100%;
+    }
+
+    &-btn,
+    &-dropdown-toggle {
+        background-color: $dark;
+        border: none;
+        padding: $space-02 !important;
+    }
+
+    &-dropdown-toggle:hover {
+        background-color: darken($warning, 6%) !important;
+        cursor: pointer !important;
+        transition: $transition-time !important;
+    }
+
+    &-completed {
+
+        &:hover {
+            .task-btn,
+            .task-dropdown-toggle {
+                background-color: $success;
+                cursor: pointer;
+                transition: $transition-time;
+            }
+        }
+
+        .task-btn,
+        .task-dropdown-toggle {
+            background-color: $success;
+
+            &:hover {
+                background-color: darken($success, 10%) !important;
+                cursor: pointer !important;
+                transition: $transition-time !important;
+            }
+        }
+    }
+
     .checkbox-icon {
         color: $light;
-        font-size: 30px;
-        margin: 0 $space-02;
-
-        &-checked {
-            color: $success;
-        }
+        font-size: 26px;
+        margin-right: $space-01;
+        margin-left: $space-00;
     }
 
     input,
@@ -46,5 +73,22 @@
         border-bottom: 1px solid $light;
         color: $light;
         outline: none;
+    }
+
+    &-dropdown {
+        background-color: $dark !important;
+        a {
+            color: $light;
+            &:hover {
+                color: $light !important;
+            }
+        }
+
+        &-item:hover {
+            background-color: darken($dark, 10%) !important;
+            a {
+                color: $light !important;
+            }
+        }
     }
 }

@@ -1,35 +1,27 @@
 import { useState } from 'react';
-import './task.scss';
 import { BsCheck2All } from 'react-icons/bs';
 import { AiFillCheckCircle, AiFillEdit } from 'react-icons/ai'
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Dropdown from 'react-bootstrap/Dropdown';
+import './task.scss';
 
 const Task = ({
     task, // -> description, id, completed
     onCheckTask,
-    onExpandMenu,
     editing,
-    onConfirmEdit
+    onConfirmEdit,
+    taskMenuItems // -> name, icon, func
 }) => {
     const [ description, setDescription ] = useState(task.description)
-    // const [ editing, setEditing ] = useState(false)
-
-    const expandOptions = (e) => {
-        e.preventDefault(); // disables default context menu
-
-        onExpandMenu(prevData => ({
-            x: e.pageX,
-            y: e.pageY,
-            show: task === prevData.task ? !prevData.show : true,
-            task: task
-        }))
-    }
+    // const [ editing, setEditing ] = useState(true)
 
     const onChange = (e) => {
         setDescription(e.target.value)
     }
 
     const onBlur = () => {
-        onConfirmEdit(description)
+        onConfirmEdit({...task, description: description})
     }
 
     const handleEnterKeyPress = (e) => {
@@ -50,36 +42,53 @@ const Task = ({
         }
     }
 
+    const onClick = (e, func) => {
+        e.preventDefault()
+        func(task)
+    }
+
     return (
-        <div 
-            className={`task ${task.completed ? 'task-completed' : ''}`} 
-            onClick={() => !editing && onCheckTask(task)} 
-            onContextMenu={(e) => {
-                expandOptions(e);
-            }
-        }>
+        <Dropdown 
+            as={ButtonGroup} 
+            className={`task ${task.completed ? 'task-completed' : ''}`}
+        >
+            <Button 
+                className='task-btn text-start'
+                onClick={() => !editing && onCheckTask(task)} 
+            >
+                {renderIcon()} 
 
-            {renderIcon()}
+                
 
-            <div>
-                {/* task here */}
-                {!editing ? (
-                    description
-                ) : (
-                    <div>
-                        <input 
-                            type='text'
-                            placeholder='Task description here'
-                            value={description}
-                            onChange={onChange}
-                            onBlur={onBlur}
-                            onKeyDown={handleEnterKeyPress}
-                            autoFocus
-                        />
-                    </div>
-                )}
-            </div>
-        </div>
+                {!editing && task.description}
+
+                <input 
+                    type='text'
+                    placeholder='Task description here'
+                    value={description}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    onKeyDown={handleEnterKeyPress}
+                    className={!editing ? 'd-none' : ''}
+                    autoFocus
+                />
+                
+            </Button>
+    
+            <Dropdown.Toggle split className="task-dropdown-toggle" />
+            <Dropdown.Menu className='task-dropdown'>
+                {taskMenuItems.map((item, i) => (
+                    <Dropdown.Item 
+                        key={`task-${task.id}-menu-item-${i}`} 
+                        href="#"
+                        onClick={e => onClick(e, item.func)}
+                        className='task-dropdown-item'
+                    >
+                            {item.name} {` `} {item.icon}
+                    </Dropdown.Item>
+                ))}
+            </Dropdown.Menu>
+        </Dropdown>
     )
 }
 

@@ -1,11 +1,6 @@
 import Task from './Task';
-
-const onCheck = () => {
-    console.log("check test")
-}
-const onExpandMenu = () => {
-    console.log("expand test")
-}
+import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
+import { TiCancel } from 'react-icons/ti';
 
 const defaultTask = {
     description: "Do a task",
@@ -16,11 +11,28 @@ export default {
     title: 'Task',
     component: Task,
     args: {
-        onCheckTask: onCheck,
-        onExpandMenu: onExpandMenu,
+        onCheckTask: () => console.log("toggle check!"),
+        onConfirmEdit: () => console.log("confirm edit"),
         task: {
             ...defaultTask
-        }
+        },
+        taskMenuItems: [
+            {
+                name: 'Rename',
+                icon: <AiFillEdit className='' />,
+                func: () => console.log("rename task")
+            },
+            {
+                name: 'Remove',
+                icon: <AiFillDelete className='' />,
+                func: () => console.log("remove task")
+            },
+            {
+                name: "Cancel",
+                icon: <TiCancel className='' />,
+                func: () => console.log("cancel")
+            },
+        ]
     }
 }
 
@@ -40,6 +52,6 @@ export const Completed = {
 
 export const InEditing = {
     args: {
-
+        editing: true
     },
 };
