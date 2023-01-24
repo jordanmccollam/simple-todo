@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Heading, Task } from './components';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
@@ -33,6 +33,11 @@ function App() {
     task: null
   })
   const [editingTask, setEditingTask] = useState(null)
+  const [backendData, setBackendData] = useState([{}])
+
+  useEffect(() => {
+    fetch("/api").then(res => res.json()).then(data => setBackendData(data))
+  }, [])
 
   const onAddTask = (event) => {
     var newTask = {id: Math.floor(Math.random() * 10000), description: '', completed: false}
