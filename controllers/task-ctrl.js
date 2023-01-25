@@ -46,7 +46,19 @@ createTask = (req, res) => {
     })
 }
 
+deleteTask = (req, res) => {
+    console.log(req)
+    Task.findOneAndDelete({ _id: req.params.id }, (err, task) => {
+        if (!err) {
+            return res.status(200).json({ success: true, output: req.params.id });
+        } else {
+            return res.status(400).json({ success: false, error: err });
+        }
+    })
+}
+
 module.exports = {
     getTasks,
-    createTask
+    createTask,
+    deleteTask
 }

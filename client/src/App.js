@@ -9,17 +9,17 @@ import apis from './api';
 
 const testTasks = [
   {
-    id: 1,
+    _id: 1,
     description: "Do a task",
     completed: false
   },
   {
-    id: 2,
+    _id: 2,
     description: "Do dishes",
     completed: true
   },
   {
-    id: 3,
+    _id: 3,
     description: "Make bed",
     completed: false
   },
@@ -38,7 +38,7 @@ function App() {
   }, [])
 
   const onAddTask = (event) => {
-    var newTask = {id: 'new', description: '', completed: false}
+    var newTask = {_id: 'new', description: '', completed: false}
     setTasks(prevTasks => [...prevTasks, newTask]);
     onEditTask(newTask)
   }
@@ -57,6 +57,7 @@ function App() {
 
   const onRemoveTask = (targetTask) => {
     setTasks(prevTasks => prevTasks.filter(task => task != targetTask))
+    apis.deleteTask(targetTask._id)
   }
 
   const onEditTask = (targetTask) => {
@@ -67,7 +68,7 @@ function App() {
     }
   }
 
-  const onConfirmEdit = (updatedTask) => {
+  const onConfirmEdit = async (updatedTask) => {
     // If task is blank -> delete it
     if (updatedTask.description === "" && editingTask.description === "") {
       onRemoveTask(editingTask)
@@ -82,21 +83,25 @@ function App() {
       setEditingTask(null)
       return;
     }
+
+    // If task doesn't exist yet, create it
+    if (updatedTask._id === 'new') {
+      // Delete task _id so that a unique one is set by backend
+      // (create a hard copy of local task so you don't cause any react key errors)
+      const newTask = {...updatedTask}
+      delete newTask._id;
+      const res = await apis.createTask(newTask)
+      updatedTask._id = res.data.output._id; // <- update local id in case we delete it or edit it
+    }
+    // else, update exisiting task
+    else {
+      
+    }
     
     var allTasks = [...tasks]
     allTasks[tasks.indexOf(editingTask)] = updatedTask
     setTasks(allTasks)
     setEditingTask(null)
-
-    // If task doesn't exist yet, create it
-    if (updatedTask.id === 'new') {
-      // Delete task id so that a unique one is set by backend
-      // (create a hard copy of local task so you don't cause any react key errors)
-      const newTask = {...updatedTask}
-      delete newTask.id;
-      apis.createTask(newTask)
-    }
-    // else, update exisiting task
   }
 
   const onCancel = () => {
