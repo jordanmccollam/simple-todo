@@ -95,7 +95,7 @@ function App() {
     }
     // else, update exisiting task
     else {
-      
+      apis.updateTask(updatedTask._id, updatedTask);
     }
     
     var allTasks = [...tasks]

@@ -41,7 +41,7 @@ createTask = (req, res) => {
     }).catch(err => {
         return res.status(400).json({
             success: false,
-            message: ("Task not created due to error: ", err)
+            message: ("Task not CREATED due to error: ", err)
         })
     })
 }
@@ -57,8 +57,48 @@ deleteTask = (req, res) => {
     })
 }
 
+updateTask = (req, res) => {
+    const body = req.body
+
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a body to update',
+        })
+    }
+
+    Task.findOne({ _id: req.params.id }, (err, task) => {
+        if (err) {
+            return res.status(404).json({
+                err,
+                message: 'Task not found!',
+            })
+        }
+
+        // CONTENT TO UPDATE
+        task.description = body.description;
+        task.completed = body.completed;
+
+        task.save()
+            .then(() => {
+                return res.status(200).json({
+                    success: true,
+                    output: task,
+                    message: 'Task updated!',
+                })
+            })
+            .catch(err => {
+                return res.status(404).json({
+                    success: false,
+                    message: ("Task not UPDATED due to error: ", err)
+                })
+            })
+    })
+}
+
 module.exports = {
     getTasks,
     createTask,
-    deleteTask
+    deleteTask,
+    updateTask
 }
