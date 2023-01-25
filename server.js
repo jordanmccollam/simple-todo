@@ -22,9 +22,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(bodyParser.json());
 
-// app.get("/api", (req, res) => {
-//     res.json({"users": ["userOne", "userTwo", "userThree"]})
-// })
+app.get("/api", (req, res) => {
+    res.json({"users": ["userOne", "userTwo", "userThree"]})
+})
 
 app.use('/api', routes);
 

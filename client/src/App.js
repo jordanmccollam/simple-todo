@@ -5,6 +5,7 @@ import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import { TiCancel } from 'react-icons/ti';
 import moment from 'moment';
 // import './app.scss';
+import apis from './api';
 
 const testTasks = [
   {
@@ -25,7 +26,7 @@ const testTasks = [
 ]
 
 function App() {
-  const [tasks, setTasks] = useState(testTasks)
+  const [tasks, setTasks] = useState([])
   const [taskMenuData, setTaskMenuData] = useState({
     x: 0,
     y: 0,
@@ -33,10 +34,13 @@ function App() {
     task: null
   })
   const [editingTask, setEditingTask] = useState(null)
-  const [backendData, setBackendData] = useState([{}])
 
   useEffect(() => {
-    fetch("/api").then(res => res.json()).then(data => setBackendData(data))
+    apis.getTasks().then(res => {
+      setTasks(res.data.output);
+    }).catch(err => {
+      console.error("error:: getTasks:", err)
+    })
   }, [])
 
   const onAddTask = (event) => {
