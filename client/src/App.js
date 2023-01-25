@@ -27,12 +27,6 @@ const testTasks = [
 
 function App() {
   const [tasks, setTasks] = useState([])
-  const [taskMenuData, setTaskMenuData] = useState({
-    x: 0,
-    y: 0,
-    show: false,
-    task: null
-  })
   const [editingTask, setEditingTask] = useState(null)
 
   useEffect(() => {
@@ -44,7 +38,7 @@ function App() {
   }, [])
 
   const onAddTask = (event) => {
-    var newTask = {id: Math.floor(Math.random() * 10000), description: '', completed: false}
+    var newTask = {id: 'new', description: '', completed: false}
     setTasks(prevTasks => [...prevTasks, newTask]);
     onEditTask(newTask)
   }
@@ -74,10 +68,35 @@ function App() {
   }
 
   const onConfirmEdit = (updatedTask) => {
+    // If task is blank -> delete it
+    if (updatedTask.description === "" && editingTask.description === "") {
+      onRemoveTask(editingTask)
+      setEditingTask(null)
+      return;
+    }
+    // If task wasn't blank but is after editing -> revert back
+    else if (updatedTask.description === "" && editingTask.description !== "") {
+      var allTasks = [...tasks]
+      allTasks[tasks.indexOf(editingTask)] = editingTask
+      setTasks(allTasks)
+      setEditingTask(null)
+      return;
+    }
+    
     var allTasks = [...tasks]
     allTasks[tasks.indexOf(editingTask)] = updatedTask
     setTasks(allTasks)
     setEditingTask(null)
+
+    // If task doesn't exist yet, create it
+    if (updatedTask.id === 'new') {
+      // Delete task id so that a unique one is set by backend
+      // (create a hard copy of local task so you don't cause any react key errors)
+      const newTask = {...updatedTask}
+      delete newTask.id;
+      apis.createTask(newTask)
+    }
+    // else, update exisiting task
   }
 
   const onCancel = () => {
@@ -122,10 +141,10 @@ function App() {
             <Row className='task-list'>
               <Col>
                 {tasks.filter(t => !t.completed).map((task, taskIndex) => (
-                  <Task editing={editingTask === task} onConfirmEdit={onConfirmEdit} onCheckTask={onCheckTask} key={`task-${task.id}`} task={task} taskIndex={taskIndex} taskMenuItems={taskMenuItems} />
+                  <Task editing={editingTask === task} onConfirmEdit={onConfirmEdit} onCheckTask={onCheckTask} key={`task-${task._id}`} task={task} taskIndex={taskIndex} taskMenuItems={taskMenuItems} />
                 ))}
                 {tasks.filter(t => t.completed).map((task, taskIndex) => (
-                  <Task editing={editingTask === task} onConfirmEdit={onConfirmEdit} onCheckTask={onUncheckTask} key={`completed-task-${task.id}`} task={task} taskIndex={taskIndex} taskMenuItems={taskMenuItems} />
+                  <Task editing={editingTask === task} onConfirmEdit={onConfirmEdit} onCheckTask={onUncheckTask} key={`completed-task-${task._id}`} task={task} taskIndex={taskIndex} taskMenuItems={taskMenuItems} />
                 ))}
               </Col>
             </Row>

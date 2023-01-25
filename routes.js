@@ -5,7 +5,7 @@ const TaskCtrl = require('./controllers/task-ctrl');
 const router = express.Router();
 
 // TASKS
-// router.post('/entry', TaskCtrl.createEntry);
+router.post('/task', TaskCtrl.createTask);
 // router.put('/entry/:id', TaskCtrl.updateEntry);
 // router.delete('/entry/:id', TaskCtrl.deleteEntry);
 // router.get('/entry/:id', TaskCtrl.getEntry);

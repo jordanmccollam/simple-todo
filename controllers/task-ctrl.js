@@ -14,6 +14,39 @@ getTasks = (req, res) => {
     })
 }
 
+createTask = (req, res) => {
+    const body = req.body;
+
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: "You must provide a task"
+        })
+    }
+
+    const task = new Task(body)
+    if (!task) {
+        return res.status(400).json({
+            success: false,
+            error: "Something went wrong creating this task"
+        })
+    }
+
+    task.save().then(() => {
+        return res.status(201).json({
+            success: true,
+            message: "Task successfully created!",
+            output: task
+        })
+    }).catch(err => {
+        return res.status(400).json({
+            success: false,
+            message: ("Task not created due to error: ", err)
+        })
+    })
+}
+
 module.exports = {
     getTasks,
+    createTask
 }

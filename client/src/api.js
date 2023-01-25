@@ -8,9 +8,12 @@ const rest = process.env.REACT_APP_ENV === 'production' ? axios : axios.create({
 
 // TASKS
 export const getTasks = () => rest.get(`/tasks`).catch(err => console.error("request", err));
+export const createTask = (payload) => rest.post(`/task`, payload).catch(err => console.error("request", err));
+
 
 const apis = {
-    getTasks
+    getTasks,
+    createTask
 }
 
 export default apis;
