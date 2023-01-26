@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import {Helmet} from "react-helmet";
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Heading, Task } from './components';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
@@ -134,6 +135,11 @@ function App() {
     <div className='App' onContextMenu={(e) => {
       e.preventDefault(); // disables right click / context menu behavior
     }}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Todos</title>
+        {/* <link rel="canonical" href="http://mysite.com/example" /> */}
+      </Helmet>
       
       <Container className='app-container'>
         <Row className='app-header'>
