@@ -45,14 +45,18 @@ function App() {
 
   const onCheckTask = (taskToCheck) => {
     var allTasks = [...tasks]
-    allTasks[tasks.indexOf(taskToCheck)].completed = true
+    var targetTask = allTasks[tasks.indexOf(taskToCheck)]
+    targetTask.completed = true
     setTasks(allTasks)
+    apis.updateTask(taskToCheck._id, targetTask)
   }
 
   const onUncheckTask = (taskToUncheck) => {
     var allTasks = [...tasks]
-    allTasks[tasks.indexOf(taskToUncheck)].completed = false
+    var targetTask = allTasks[tasks.indexOf(taskToUncheck)]
+    targetTask.completed = false
     setTasks(allTasks)
+    apis.updateTask(taskToUncheck._id, targetTask)
   }
 
   const onRemoveTask = (targetTask) => {
