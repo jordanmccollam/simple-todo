@@ -31,6 +31,7 @@ function App() {
 
   useEffect(() => {
     apis.getTasks().then(res => {
+      console.log(res)
       setTasks(res.data.output);
     }).catch(err => {
       console.error("error:: getTasks:", err)
